@@ -1,0 +1,75 @@
+openexchange app id 
+cab5b2a0c3334847b6c62f2d32e0e954
+
+http://openexchangerates.org/api/.
+
+http://openexchangerates.org/api/latest.json?app_id=cab5b2a0c3334847b6c62f2d32e0e954
+
+
+
+Product product = new Product();
+product.Name = "Apple";
+product.Expiry = new DateTime(2008, 12, 28);
+product.Sizes = new string[] { "Small" };
+ 
+string json = JsonConvert.SerializeObject(product);
+//{
+//  "Name": "Apple",
+//  "Expiry": "2008-12-28T00:00:00",
+//  "Sizes": [
+//    "Small"
+//  ]
+//}
+
+
+string json = @"{
+  'Name': 'Bad Boys',
+  'ReleaseDate': '1995-4-7T00:00:00',
+  'Genres': [
+    'Action',
+    'Comedy'
+  ]
+}";
+
+Movie m = JsonConvert.DeserializeObject<Movie>(json);
+
+string name = m.Name;
+// Bad Boys
+
+
+
+JArray array = new JArray();
+array.Add("Manual text");
+array.Add(new DateTime(2000, 5, 23));
+
+JObject o = new JObject();
+o["MyArray"] = array;
+
+string json = o.ToString();
+// {
+//   "MyArray": [
+//     "Manual text",
+//     "2000-05-23T00:00:00"
+//   ]
+// }
+
+
+
+JsonSchema schema = JsonSchema.Parse(@"{
+  'type': 'object',
+  'properties': {
+    'name': {'type':'string'},
+    'hobbies': {'type': 'array'}
+  }
+}");
+
+JObject person = JObject.Parse(@"{
+  'name': 'James',
+  'hobbies': ['.NET', 'LOLCATS']
+}");
+
+bool valid = person.IsValid(schema);
+// true
+
+
+
